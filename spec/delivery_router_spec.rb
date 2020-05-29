@@ -35,7 +35,6 @@ describe DeliveryRouter do
   end
 
   describe "#route" do
-
     before(:all) do
       @customers = [
         Customer.new(:id => 1, :x => 1, :y => 1),
