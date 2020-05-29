@@ -1,0 +1,10 @@
+#!/usr/bin/ruby
+
+require 'irb'
+require_relative '../lib/customer.rb'
+require_relative '../lib/delivery_router.rb'
+require_relative '../lib/restaurant.rb'
+require_relative '../lib/rider.rb'
+
+
+IRB.start
