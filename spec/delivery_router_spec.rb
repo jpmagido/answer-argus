@@ -19,7 +19,7 @@ describe DeliveryRouter do
         Rider.new(:id => 1, :speed => 10, :x => 2, :y => 0),
         Rider.new(:id => 2, :speed => 10, :x => 1, :y => 0),
       ]
-      @delivery_router = DeliveryRouter.new(@restaurants, @customers, @riders)
+        @delivery_router = DeliveryRouter.new(@restaurants, @customers, @riders)
     end
 
     context "given customer 1 orders from restaurant 3" do
