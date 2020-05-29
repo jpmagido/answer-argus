@@ -21,3 +21,6 @@
     - each rider can carry an infinite amount of meals at the same time
     - riders are ninjas! They fly over trafic jams and buildings, they never need to take
       a break and they know how to solve a NP-complete problem in polynomial time ;)
+      
+      
+Run app-console: `./bin/console `
