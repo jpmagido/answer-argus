@@ -41,28 +41,26 @@ class DeliveryRouter
     @orders.each do |order|
       rest = @restaurants.detect { |r| r.id == order.restaurant }
       order.rider = @riders.min_by { |rider|
-        distance(
-          {x: rest.val_x, y: rest.val_y},
-          {x: rider.val_x, y: rider.val_y}
-        )
+        distance({x: rest.val_x, y: rest.val_y},
+                 {x: rider.val_x, y: rider.val_y})
       }.id
     end
   end
 
   def add_duration
     @orders.each do |o|
-      o.duration = 0
       restaurant = @restaurants.detect { |r| r.id == o.restaurant }
       rider = @riders.detect { |r| r.id == o.rider }
       customer = @customers.detect { |c| c.id == o.customer }
+
+      duration_rest_cust = distance({x: restaurant.val_x, y: restaurant.val_y},
+                                    {x: customer.val_x, y: customer.val_y}) * 60 / rider.speed
+      duration_rider_rest = distance({x: rider.val_x, y: rider.val_y},
+                                     {x: restaurant.val_x, y: restaurant.val_y}) * 60 / rider.speed
+      o.duration = 0
       o.duration += restaurant.cooking_time
-      dist_rest_cust = distance({x: restaurant.val_x, y: restaurant.val_y}, {x: customer.val_x, y: customer.val_y})
-      o.duration += dist_rest_cust * 60 / rider.speed
-      dist_rider_rest = distance({x: rider.val_x, y: rider.val_y}, {x: restaurant.val_x, y: restaurant.val_y})
-      time_rider_rest = dist_rider_rest * 60 / rider.speed
-      if time_rider_rest > restaurant.cooking_time
-        o.duration += (time_rider_rest - restaurant.cooking_time)
-      end
+      o.duration += duration_rest_cust
+      o.duration += (duration_rider_rest - restaurant.cooking_time) if duration_rider_rest > restaurant.cooking_time
     end
   end
 
