@@ -33,8 +33,9 @@ describe DeliveryRouter do
       expect(delivery_router.riders.sample).to be_an_instance_of(Rider)
     end
     it 'should call Order class' do
-      # allow(DeliveryRouter.add_order).to receive(Order.new).with({customer: 1, restaurant: 3})
-      allow(Order).to receive(:new).with(customer: 9, restaurant: 18).and_return(Order.new(customer: 9, restaurant: 18))
+      allow(Order).to receive(:new)
+                        .with(customer: 9, restaurant: 18)
+                        .and_return(Order.new(customer: 9, restaurant: 18))
       delivery_router.add_order(customer: 9, restaurant: 18)
       expect(Order).to have_received(:new).with(customer: 9, restaurant: 18)
     end
