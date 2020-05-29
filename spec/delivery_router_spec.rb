@@ -4,6 +4,36 @@ require 'restaurant'
 require 'rider'
 
 describe DeliveryRouter do
+  context 'DeliveryRouter creation' do
+    let(:rider_1) { Rider.new(id: 8, speed: 15, x: 2, y: 4) }
+    let(:rider_2) { Rider.new(id: 3, speed: 15, x: 4, y: 6) }
+    let(:cust_1) { Customer.new(id: 10, x: 8, y: 10) }
+    let(:cust_2) { Customer.new(id: 9, x: 2, y: 4) }
+    let(:rest_1) { Restaurant.new(id: 18, cooking_time: 15, x: 2, y: 4) }
+    let(:rest_2) { Restaurant.new(id: 17, cooking_time: 25, x: 12, y: 14) }
+    let(:restaurants) { [rest_1, rest_2] }
+    let(:customers) { [cust_1, cust_2] }
+    let(:riders) { [rider_1, rider_2] }
+
+    let(:delivery_router) { DeliveryRouter.new(restaurants, customers, riders) }
+
+    it 'should create a valid delivery_router' do
+      expect(delivery_router).to be_an_instance_of(DeliveryRouter)
+    end
+
+    it 'should have attributes with proper data' do
+      expect(delivery_router.restaurants.count).to eq(2)
+      expect(delivery_router.customers.count).to eq(2)
+      expect(delivery_router.riders.count).to eq(2)
+      expect(delivery_router.orders).to be_empty
+    end
+    it 'should have working attributes' do
+      expect(delivery_router.restaurants.sample).to be_an_instance_of(Restaurant)
+      expect(delivery_router.customers.sample).to be_an_instance_of(Customer)
+      expect(delivery_router.riders.sample).to be_an_instance_of(Rider)
+    end
+  end
+
   describe "#route" do
 
     before(:all) do
@@ -19,7 +49,7 @@ describe DeliveryRouter do
         Rider.new(:id => 1, :speed => 10, :x => 2, :y => 0),
         Rider.new(:id => 2, :speed => 10, :x => 1, :y => 0),
       ]
-        @delivery_router = DeliveryRouter.new(@restaurants, @customers, @riders)
+      @delivery_router = DeliveryRouter.new(@restaurants, @customers, @riders)
     end
 
     context "given customer 1 orders from restaurant 3" do
