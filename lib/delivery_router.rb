@@ -1,5 +1,6 @@
 class DeliveryRouter
-  attr_accessor :restaurants, :customers, :riders, :orders
+  attr_accessor :orders
+  attr_reader :restaurants, :customers, :riders
 
   def initialize(restaurants, customers, riders)
     @orders = []
@@ -19,7 +20,6 @@ class DeliveryRouter
       order.clear if order[:customer] == order_options[:customer]
     end
   end
-
 
   def route(rider_id)
     return [] if @orders.detect { |o| o[:rider] == rider_id[:rider] }.nil?
@@ -53,10 +53,14 @@ class DeliveryRouter
       restaurant = @restaurants.detect { |r| r.id == o[:restaurant] }
       rider = @riders.detect { |r| r.id == o[:rider] }
       customer = @customers.detect { |c| c.id == o[:customer] }
-      cooking_time = restaurant.cooking_time
-      o[:duration] += cooking_time
-      dist = distance({x: restaurant.val_x, y: restaurant.val_y}, {x: customer.val_x, y: customer.val_y})
-      o[:duration] += dist * 60 / rider.speed
+      o[:duration] += restaurant.cooking_time
+      dist_rest_cust = distance({x: restaurant.val_x, y: restaurant.val_y}, {x: customer.val_x, y: customer.val_y})
+      o[:duration] += dist_rest_cust * 60 / rider.speed
+      dist_rider_rest = distance({x: rider.val_x, y: rider.val_y},{x: restaurant.val_x, y: restaurant.val_y})
+      time_rider_rest = dist_rider_rest * 60 / rider.speed
+      if time_rider_rest > restaurant.cooking_time
+        o[:duration] += (time_rider_rest - restaurant.cooking_time)
+      end
     end
   end
 

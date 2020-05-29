@@ -1,5 +1,5 @@
 class Customer
-  attr_accessor :id, :val_x, :val_y
+  attr_reader :id, :val_x, :val_y
 
   def initialize(options)
     @id = options[:id]

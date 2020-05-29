@@ -1,5 +1,5 @@
 class Restaurant
-  attr_accessor :id, :val_x, :val_y, :cooking_time
+  attr_reader :id, :val_x, :val_y, :cooking_time
 
   def initialize(options)
     @id = options[:id]

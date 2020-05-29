@@ -1,5 +1,5 @@
 class Rider
-  attr_accessor :id, :val_x, :val_y, :speed
+  attr_reader :id, :val_x, :val_y, :speed
 
   def initialize(options)
     @id = options[:id]
