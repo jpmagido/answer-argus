@@ -1,7 +1,9 @@
 class Customer
-  attr_accessor :options
+  attr_accessor :id, :val_x, :val_y
 
   def initialize(options)
-    @options = options
+    @id = options[:id]
+    @val_x = options[:x]
+    @val_y = options[:y]
   end
 end
