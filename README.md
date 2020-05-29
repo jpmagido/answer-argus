@@ -24,3 +24,4 @@
       
       
 Run app-console: `./bin/console `
+run Rspec `rspec`
